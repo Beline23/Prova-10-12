@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Contato com LocalStorage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #89f69d;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background-color: #1d8ebe;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #4c5baf;
+            color: rgb(255, 255, 255);
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: hsl(219, 40%, 45%);
+        }
+
+        .result {
+            margin-top: 30px;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .result h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .result p {
+            margin: 5px 0;
+        }
+
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulário de Contato</h1>
+        <form id="contactForm">
+            <div class="form-group">
+                <label for="name">Nome:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Mensagem:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+
+        <div id="resultContainer" class="result" style="display:none;">
+            <h3>Dados Enviados:</h3>
+            <p><strong>Nome:</strong> <span id="resultName"></span></p>
+            <p><strong>Email:</strong> <span id="resultEmail"></span></p>
+            <p><strong>Mensagem:</strong> <span id="resultMessage"></span></p>
+        </div>
+    </div>
+
+    <script>
+        // Função para exibir os dados armazenados
+        function displayStoredData() {
+            const storedName = localStorage.getItem('name');
+            const storedEmail = localStorage.getItem('email');
+            const storedMessage = localStorage.getItem('message');
+
+            if (storedName && storedEmail && storedMessage) {
+                document.getElementById("resultName").innerText = storedName;
+                document.getElementById("resultEmail").innerText = storedEmail;
+                document.getElementById("resultMessage").innerText = storedMessage;
+                document.getElementById("resultContainer").style.display = "block";
+            }
+        }
+
+        
+        window.onload = displayStoredData;
+
+        
+        document.getElementById("contactForm").addEventListener("submit", function(event) {
+            event.preventDefault(); 
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const message = document.getElementById("message").value;
+
+           
+            localStorage.setItem('name', name);
+            localStorage.setItem('email', email);
+            localStorage.setItem('message', message);
+
+            document.getElementById("resultName").innerText = name;
+            document.getElementById("resultEmail").innerText = email;
+            document.getElementById("resultMessage").innerText = message;
+
+           
+            document.getElementById("resultContainer").style.display = "block";
+
+
+            document.getElementById("contactForm").reset();
+        });
+    </script>
+</body>
+</html>
